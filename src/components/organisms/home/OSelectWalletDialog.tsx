@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { Connectors } from "../../config/Connector";
-import ADialogBox from "../atoms/ADialogBox";
-import GlobalContext from "../../store/global/context";
-import { ActionType } from "../../store/global/action";
+import { Connectors } from "../../../config/Connector";
+import ADialogBox from "../../atoms/ADialogBox";
+import GlobalContext from "../../../store/global/context";
+import { ActionType } from "../../../store/global/action";
 
 const OSelectWalletDialog = () => {
   const { GlobalDispatch, GlobalState } = useContext(GlobalContext);

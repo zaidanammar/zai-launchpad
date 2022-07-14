@@ -1,13 +1,45 @@
+import React, { useState } from "react";
 import { Step, StepLabel, Stepper } from "@mui/material";
-import React from "react";
+import { isEqual } from "lodash";
+
+import OVerifyTokenForm from "../components/organisms/launchpad/OVerifyTokenForm";
+import UseFormLaunchpad from "../hooks/launchpad/Form";
+import ODefiLaunchpadForm from "../components/organisms/launchpad/ODefiLaunchpadForm";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const steps = ["Verify Token", "DeFi launchpad Info", "Finish"];
 
 const Launchpad = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  // const { handleSubmit } = UseFormLaunchpad();
+
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+    setTouched,
+    dirty,
+  } = useFormik({
+    initialValues: {
+      token: "",
+      currency: "eth",
+      fee: "5%",
+    },
+    validationSchema: Yup.object({
+      token: Yup.string().required("Token address is required"),
+    }),
+    onSubmit: (values) => {
+      // mutation.mutate(values);
+    },
+  });
+
   return (
-    <main className="pt-5">
-      <section className="">
-        <Stepper activeStep={0} alternativeLabel>
+    <form onSubmit={handleSubmit} className="pt-5">
+      <section>
+        <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -16,12 +48,33 @@ const Launchpad = () => {
         </Stepper>
       </section>
 
-      <section className="bg-white p-6 mt-10 shadow-sm text-sm font-medium">
-        <div>
-          <h1>Token Address</h1>
-        </div>
-      </section>
-    </main>
+      {isEqual(activeStep, 0) && (
+        <OVerifyTokenForm
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setTouched={setTouched}
+          dirty={dirty}
+        />
+      )}
+      {isEqual(activeStep, 1) && (
+        <ODefiLaunchpadForm
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setTouched={setTouched}
+          dirty={dirty}
+        />
+      )}
+    </form>
   );
 };
 

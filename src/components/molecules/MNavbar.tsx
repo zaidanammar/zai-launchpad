@@ -8,9 +8,11 @@ import { ActionType } from "../../store/global/action";
 import { useWeb3React } from "@web3-react/core";
 import { truncateAddress } from "../../utils/common";
 import { Menu, MenuItem } from "@mui/material";
+import { BsList } from "react-icons/bs";
 
 const MNavbar = () => {
-  const { GlobalDispatch } = useContext(GlobalContext);
+  const { GlobalDispatch, GlobalState } = useContext(GlobalContext);
+  const { openSidebar } = GlobalState;
   const [anchorEl, setAnchorEl] = useState(null);
 
   const { active, account, deactivate, chainId } = useWeb3React();
@@ -39,14 +41,22 @@ const MNavbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleOpenSidebar = () => {
+    GlobalDispatch({
+      type: ActionType.SetOpenSidebar,
+      payload: !openSidebar,
+    });
+  };
+
   return (
     <nav className="fixed h-16 z-10 flex md:px-8 px-6 w-full bg-white shadow-md">
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2 justify-start">
-          <div>
-            <h1 className="text-lg font-semibold text-textPrimary">
-              Zai Launchpad
-            </h1>
+          <div className="md:flex hidden">
+            <h1 className="text-lg font-semibold text-textPrimary">ZaiSale</h1>
+          </div>
+          <div className="md:hidden flex">
+            <BsList size={24} onClick={handleOpenSidebar} />
           </div>
         </div>
 
@@ -102,7 +112,7 @@ const MNavbar = () => {
             </Menu>
           </div>
         ) : (
-          <div className="sm:flex hidden items-center sm:w-fit py-2">
+          <div className="flex items-center sm:w-fit py-2">
             <AButton
               title="Connect"
               onClick={() => handleOpenSelectWallet(true)}

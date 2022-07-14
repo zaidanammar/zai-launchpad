@@ -13,7 +13,7 @@ const AButton = ({ title, onClick, disabled, type = "button" }: Props) => {
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className="w-full h-9 flex justify-center items-center bg-primary px-5 hover:bg-pink-100 hover:bg-opacity-75 rounded-lg shadow-sm text-textPrimary font-sans font-medium"
+      className="w-full py-2 flex justify-center items-center bg-primary px-6 hover:bg-pink-100 hover:bg-opacity-75 rounded-lg shadow-sm text-textPrimary font-sans font-medium"
     >
       {title}
     </button>
