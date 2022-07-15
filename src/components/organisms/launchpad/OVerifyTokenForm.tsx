@@ -5,21 +5,35 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import UseFormLaunchpad from "../../../hooks/launchpad/Form";
 import AButton from "../../atoms/AButton";
 import ATextField from "../../atoms/ATextField";
 import { isEmpty } from "lodash";
+import { FormikErrors, FormikTouched } from "formik";
+import AContainer from "../../atoms/AContainer";
 
-type Props = {
+type FormValues = {
+  token: string;
+  currency: string;
+  fee: string;
+  presale_rate: string;
+  whitelist: string;
+  minimum_buy: string;
+  maximum_buy: string;
+  liquidity: string;
+  listing_rate: string;
+};
+
+export type FormProps = {
   activeStep: number;
   setActiveStep: (activeStep: number) => void;
   handleChange: any;
-  handleSubmit: any;
-  values: any;
-  errors: any;
-  touched: any;
+  values: FormValues;
+  errors: FormikErrors<FormValues>;
   setTouched: any;
-  dirty: any;
+  touched: FormikTouched<FormValues>;
+  dirty: boolean;
+  handleSubmit?: any;
+  isSubmitting?: boolean;
 };
 
 const OVerifyTokenForm = ({
@@ -31,21 +45,16 @@ const OVerifyTokenForm = ({
   setTouched,
   handleChange,
   values,
-}: Props) => {
-  //   const { setTouched, errors, handleChange, values, touched, dirty } =
-  //     UseFormLaunchpad();
-
+}: FormProps) => {
   const handleNextStep = (step: number) => {
-    if (dirty && isEmpty(errors)) setActiveStep(step);
+    if (dirty && isEmpty(errors.token)) setActiveStep(step);
     else {
       setTouched({ token: true });
     }
   };
 
-  console.log(values);
-
   return (
-    <section className="bg-white p-6 mt-10 shadow-sm text-sm font-medium">
+    <AContainer>
       <div>
         <h1 className="mb-1.5">Token Address</h1>
         <ATextField
@@ -85,7 +94,7 @@ const OVerifyTokenForm = ({
           </RadioGroup>
         </FormControl>
       </div>
-      
+
       <div className="mt-4">
         <h1 className="mb-1.5">Fee Options</h1>
         <FormControl>
@@ -112,7 +121,7 @@ const OVerifyTokenForm = ({
           />
         </div>
       </div>
-    </section>
+    </AContainer>
   );
 };
 

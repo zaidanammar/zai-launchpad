@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, MenuItem } from "react-pro-sidebar";
 import { isMobile } from "react-device-detect";
 import { IconType } from "react-icons";
-import { isEqual } from "lodash";
 
 export interface IIconProps {
   stroke?: string;
@@ -19,10 +18,9 @@ type Props = {
     hideOnDesktop: boolean;
   };
   handleCollapseSidebar?: () => void;
-  handleLogout: () => void;
 };
 
-const AMenu = ({ item, handleCollapseSidebar, handleLogout }: Props) => {
+const AMenu = ({ item, handleCollapseSidebar }: Props) => {
   const { pathname } = useLocation();
 
   return (
@@ -41,10 +39,7 @@ const AMenu = ({ item, handleCollapseSidebar, handleLogout }: Props) => {
         icon={<item.icon />}
         onClick={isMobile ? handleCollapseSidebar : () => {}}
       >
-        <Link
-          onClick={isEqual(item.path, "login") ? handleLogout : () => {}}
-          to={item.path}
-        />
+        <Link to={item.path} />
         {item.title}
       </MenuItem>
     </Menu>

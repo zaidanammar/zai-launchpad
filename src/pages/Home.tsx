@@ -6,6 +6,26 @@ import { Connectors } from "../config/Connector";
 import OSelectWalletDialog from "../components/organisms/home/OSelectWalletDialog";
 import GlobalContext from "../store/global/context";
 import AButton from "../components/atoms/AButton";
+import ABox from "../components/atoms/ABox";
+
+const analytics = [
+  {
+    title: "$3.3M",
+    subtitle: "Total Liquidity Raised",
+  },
+  {
+    title: "138",
+    subtitle: "Total Projects",
+  },
+  {
+    title: "5.1K",
+    subtitle: "Total Participants",
+  },
+  {
+    title: "$3.7M",
+    subtitle: "Total Values Locked",
+  },
+];
 
 const Home = () => {
   const navigate = useNavigate();
@@ -33,7 +53,7 @@ const Home = () => {
       {openSelectWallet && <OSelectWalletDialog />}
       <main className="sm:pt-28 pt-16 sm:mb-0 mb-10">
         <section className="flex flex-col justify-center items-center">
-          <h1 className="sm:text-3xl text-xl font-semibold">
+          <h1 className="sm:text-3xl text-xl font-semibold text-center">
             The Launchpad Protocol for Everyone!
           </h1>
           <p className="mt-3 max-w-2xl text-center">
@@ -59,22 +79,9 @@ const Home = () => {
         </section>
 
         <section className="max-w-5xl mx-auto grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:gap-5 gap-3 my-10 pb-20">
-          <div className="flex flex-col items-center py-8 px-6 rounded-md drop-shadow-sm bg-white">
-            <h1 className="font-semibold text-3xl">$3.3M</h1>
-            <p className="mt-2">Total Liquidity Raised</p>
-          </div>
-          <div className="flex flex-col items-center py-8 px-6 rounded-md drop-shadow-sm bg-white">
-            <h1 className="font-semibold text-3xl">$138</h1>
-            <p className="mt-2">Total Projects</p>
-          </div>
-          <div className="flex flex-col items-center py-8 px-6 rounded-md drop-shadow-sm bg-white">
-            <h1 className="font-semibold text-3xl">5.1K</h1>
-            <p className="mt-2">Total Participants</p>
-          </div>
-          <div className="flex flex-col items-center py-8 px-6 rounded-md drop-shadow-sm bg-white">
-            <h1 className="font-semibold text-3xl">$3.7M</h1>
-            <p className="mt-2">Total Values Locked</p>
-          </div>
+          {analytics.map((el, idx) => (
+            <ABox key={idx} title={el.title} subtitle={el.subtitle} />
+          ))}
         </section>
       </main>
     </>

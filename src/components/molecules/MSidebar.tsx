@@ -42,10 +42,6 @@ const MSidebar = () => {
     });
   };
 
-  const handleLogout = () => {
-    console.log("logout will be trigger here");
-  };
-
   return (
     <aside
       className={
@@ -74,7 +70,6 @@ const MSidebar = () => {
             <AMenu
               key={idx}
               item={item}
-              handleLogout={handleLogout}
               handleCollapseSidebar={handleCollapseSidebar}
             />
           ))}

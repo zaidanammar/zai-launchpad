@@ -5,36 +5,22 @@ import { isEqual } from "lodash";
 import OVerifyTokenForm from "../components/organisms/launchpad/OVerifyTokenForm";
 import UseFormLaunchpad from "../hooks/launchpad/Form";
 import ODefiLaunchpadForm from "../components/organisms/launchpad/ODefiLaunchpadForm";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import OResultForm from "../components/organisms/launchpad/OResultForm";
 
 const steps = ["Verify Token", "DeFi launchpad Info", "Finish"];
 
 const Launchpad = () => {
   const [activeStep, setActiveStep] = useState(0);
-  // const { handleSubmit } = UseFormLaunchpad();
-
   const {
-    handleChange,
     handleSubmit,
-    values,
-    errors,
-    touched,
-    setTouched,
     dirty,
-  } = useFormik({
-    initialValues: {
-      token: "",
-      currency: "eth",
-      fee: "5%",
-    },
-    validationSchema: Yup.object({
-      token: Yup.string().required("Token address is required"),
-    }),
-    onSubmit: (values) => {
-      // mutation.mutate(values);
-    },
-  });
+    errors,
+    handleChange,
+    setTouched,
+    touched,
+    values,
+    isSubmitting,
+  } = UseFormLaunchpad();
 
   return (
     <form onSubmit={handleSubmit} className="pt-5">
@@ -66,12 +52,25 @@ const Launchpad = () => {
           activeStep={activeStep}
           setActiveStep={setActiveStep}
           handleChange={handleChange}
-          handleSubmit={handleSubmit}
           values={values}
           errors={errors}
           touched={touched}
           setTouched={setTouched}
           dirty={dirty}
+        />
+      )}
+      {isEqual(activeStep, 2) && (
+        <OResultForm
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setTouched={setTouched}
+          dirty={dirty}
+          isSubmitting={isSubmitting}
         />
       )}
     </form>
